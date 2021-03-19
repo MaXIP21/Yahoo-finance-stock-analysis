@@ -35,7 +35,11 @@ def main():
     logging.basicConfig(filemode='w', filename=args.logfile + '.log', level=log_level)
     logging.info("Initializing ScraperClass")
     yahoo=yd.Yahoo_data_class('Yahoo Scraper')
-    yahoo_dict=yahoo.get_fundamental_data(args.stock)
+    if args.stock is not None:
+        yahoo_dict=yahoo.get_fundamental_data(args.stock)
+    else:
+        print("Stock Thicker not defined please use -h to display help!")
+        exit(1)
     if yahoo_dict != None:
         logging.info(yahoo_dict)
         #print(yahoo_dict)
