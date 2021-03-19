@@ -8,10 +8,10 @@ usage: yahoo_fundamentals.py [-h] [--logfile LOGFILE] [-s stock]
 
 Yahoo Fundamental scraper, getting fundamental data from thickers
 
-optional arguments:
-  -h, --help            show this help message and exit
-  --logfile LOGFILE     Log is saved to this file. (default: yahoo_scraper)
-  -s stock, --stock stock
-                        Thicker of the stock. (default: None)
-  --LOG LOG_LEVEL       Set the log level using environment variable LOG.
-                        (default: INFO)
+optional arguments:\n
+  -h, --help            show this help message and exit\n
+  --logfile LOGFILE     Log is saved to this file. (default: yahoo_scraper)\n
+  -s stock, --stock stock\n
+                        Thicker of the stock. (default: None)\n
+  --LOG LOG_LEVEL       Set the log level using environment variable LOG.\n
+                        (default: INFO)\n
