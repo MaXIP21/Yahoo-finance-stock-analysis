@@ -26,10 +26,25 @@ class Yahoo_data_class:
             data_list['insider_own']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['defaultKeyStatistics']['heldPercentInsiders']['fmt']
             data_list['institution_own']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['defaultKeyStatistics']['heldPercentInstitutions']['fmt']
             data_list['short_ratio']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['defaultKeyStatistics']['shortRatio']['fmt']
-            data_list['pm_price']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['price']['postMarketPrice']['fmt']
-            data_list['prev_close_price']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['price']['regularMarketPreviousClose']['fmt']
-            
-            data_list['gap']=str(round((1-(float(data_list['prev_close_price'])/float(data_list['pm_price'])))*100, 1))
+            try:
+                data_list['pm_price']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['price']['postMarketPrice']['fmt']
+            except:
+                data_list['pm_price']="N/A"
+            try:
+                data_list['prem_price']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['price']['preMarketPrice']['fmt']
+            except:
+                data_list['prem_price']="0"
+            try:
+                data_list['prev_close_price']=data['context']['dispatcher']['stores']['QuoteSummaryStore']['financialData']['currentPrice']['fmt']
+            except:
+                data_list['prev_close_price']="0"
+
+            close_price=float(data_list['prev_close_price'])
+            prem_price=float(data_list['prem_price'])
+            if close_price>0 and prem_price>0 :
+                data_list['gap']=str(round(float(((prem_price/close_price)-1)*100), 2))
+            else:
+                data_list['gap']="N/A"
             return data_list
         except KeyError:
             print(f"Thicker symbol '{thicker}' not found.")
