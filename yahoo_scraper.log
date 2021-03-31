@@ -1,3 +1,3 @@
 INFO:root:Initializing ScraperClass
-INFO:root:{'shortName': 'Oriental Culture Holding LTD', 'mcap': '257.44M', 'float': '7.75M', 'avg_volume': '6.29M', 'insider_own': '30.24%', 'institution_own': '18.75%', 'short_ratio': '0.01', 'pm_price': 'N/A', 'prem_price': '13.38', 'prev_close_price': '12.71', 'gap': '5.27'}
+INFO:root:{'shortName': 'Universe Pharmaceuticals Inc', 'mcap': '91.77M', 'float': 'N/A', 'avg_volume': '10.26M', 'insider_own': '69.87%', 'institution_own': '0.00%', 'short_ratio': 'N/A', 'pm_price': '4.4000', 'prem_price': '4.4000', 'prev_close_price': '4.37', 'gap': '0.69'}
 INFO:root:CLI activated

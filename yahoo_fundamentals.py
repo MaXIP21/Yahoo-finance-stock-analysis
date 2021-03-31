@@ -36,7 +36,8 @@ def main():
     logging.info("Initializing ScraperClass")
     yahoo=yd.Yahoo_data_class('Yahoo Scraper')
     if args.stock is not None:
-        yahoo_dict=yahoo.get_fundamental_data(args.stock)
+        yahoo.get_fundamental_data(args.stock)
+        yahoo_dict=yahoo.data_list
     else:
         print("Stock Thicker not defined please use -h to display help!")
         exit(1)
