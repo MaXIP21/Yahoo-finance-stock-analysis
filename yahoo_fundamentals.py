@@ -18,10 +18,10 @@ def get_args():
                         default="yahoo_scraper",
                         help='Log is saved to this file.')
     
-    parser.add_argument('-s','--stock', metavar='stock', type=str, 
+    parser.add_argument('-s','--stock', metavar='stock', type=str,
                         help='Thicker of the stock.')
 
-    parser.add_argument('-n','--news', dest='news', action='store_true', 
+    parser.add_argument('-n','--news', dest='news', action='store_true',  default=None,
                         help='Fetch news.')
     
     parser.add_argument('--LOG', type=str, metavar='LOG_LEVEL', dest='LOG',
@@ -81,6 +81,7 @@ def main():
             print("\tGAP               : "+str(yahoo_dict["gap"])+"%")
         else:
             print("\tGAP               : "+str(finviz.get_dataframe_row("Change")))
+
     if args.news is not None:
         finviz.get_news()
         print("\nHeadlines : \n")
@@ -89,13 +90,6 @@ def main():
             print("\t\t"+finviz.news.values[ad][1])
             print("\t\t"+finviz.news.values[ad][2])
 
-        #for news_index in range(0,3):
-        #    date=finviz.news.index[news_index]
-            
-        #    print(finviz.news['News Headline'][0])
-    
-    #print(finviz.get_dataframe_row("Shs Float"))
-    #print(finviz.get_news())
 
 if __name__ == "__main__":
     main()
