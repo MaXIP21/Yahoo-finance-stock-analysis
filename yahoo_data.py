@@ -9,7 +9,6 @@ class Yahoo_data_class:
         self.name = name 
 
     def get_tree_data(self, keylist):
-        #print(len(keylist))
         try:
             if len(keylist) == 2:
                 select_data=self.data['context']['dispatcher']['stores'][keylist[0]][keylist[1]]
@@ -18,9 +17,16 @@ class Yahoo_data_class:
             if len(keylist) == 4:
                 select_data=self.data['context']['dispatcher']['stores'][keylist[0]][keylist[1]][keylist[2]][keylist[3]]
         except Exception as e:
-            #print("Error : "+str(e))
-            select_data = "N/A"
+            if keylist[1] == "price":
+                select_data = 0
+            else:
+                select_data = "N/A"
         return select_data
+    
+    def check_if_int(self, number):
+        if number.is_integer():
+            return number
+        return 0
 
     def get_fundamental_data(self, thicker):
         self.thicker = thicker
@@ -28,9 +34,6 @@ class Yahoo_data_class:
         try:
             html_text = requests.get(url).text
             self.data = json.loads(re.search(r'root\.App\.main = (.*?\});\n', html_text).group(1))
-
-            # uncomment this to print all data:
-            # print(json.dumps(data, indent=4))
             self.data_list = {}
 
             self.data_list['shortName']=self.get_tree_data(['QuoteSummaryStore','quoteType', 'shortName'])
@@ -44,13 +47,13 @@ class Yahoo_data_class:
             self.data_list['prem_price']=self.get_tree_data(['QuoteSummaryStore','price', 'preMarketPrice','fmt'])
             self.data_list['prev_close_price']=self.get_tree_data(['QuoteSummaryStore','financialData', 'currentPrice','fmt'])
 
-            close_price=float(self.data_list['prev_close_price'])
-            prem_price=float(self.data_list['prem_price'])
+            close_price=self.check_if_int(float(self.data_list['prev_close_price']))
+            prem_price=self.check_if_int(float(self.data_list['prem_price']))
             if close_price>0 and prem_price>0 :
                 self.data_list['gap']=str(round(float(((prem_price/close_price)-1)*100), 2))
             else:
                 self.data_list['gap']="N/A"
-            #return data_list
+
         except KeyError:
             print(f"Thicker symbol '{thicker}' not found.")
             pass

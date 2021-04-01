@@ -54,10 +54,13 @@ def main():
         print("\tInstitutional Ownership   : "+yahoo_dict["institution_own"])
         print("\tShort ratio               : "+yahoo_dict["short_ratio"]+"%")
         print("---------------------------------------")
-        print("\tPost-market price : "+yahoo_dict["pm_price"])
-        print("\tPrev close price  : "+yahoo_dict["prev_close_price"])
-        print("\tPre-market price  : "+yahoo_dict["prem_price"])
-        print("\tGAP               : "+yahoo_dict["gap"]+"%")
+        print("\tPost-market price : "+str(yahoo_dict["pm_price"]))
+        print("\tPrev close price  : "+str(yahoo_dict["prev_close_price"]))
+        print("\tPre-market price  : "+str(yahoo_dict["prem_price"]))
+        if(yahoo_dict["gap"] != "N/A"):
+            print("\tGAP               : "+str(yahoo_dict["gap"])+"%")
+        else:
+            print("\tGAP               : "+str(yahoo_dict["gap"]))
 if __name__ == "__main__":
     main()
     logging.info("CLI activated")
