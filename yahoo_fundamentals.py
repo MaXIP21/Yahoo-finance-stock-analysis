@@ -4,7 +4,10 @@ import argparse
 import os
 import logging
 import yahoo_data as yd
+import finviz_class as fv
+import pandas as pd
 
+pd.set_option('display.max_colwidth', None)
 
 def get_args():
     parser = argparse.ArgumentParser(prog='yahoo_fundamentals.py', 
@@ -35,12 +38,17 @@ def main():
     logging.basicConfig(filemode='w', filename=args.logfile + '.log', level=log_level)
     logging.info("Initializing ScraperClass")
     yahoo=yd.Yahoo_data_class('Yahoo Scraper')
+    finviz=fv.Finviz_data_class(args.stock)
+    finviz.grab_data()
+    finviz.get_fundamentals()
+    
     if args.stock is not None:
         yahoo.get_fundamental_data(args.stock)
         yahoo_dict=yahoo.data_list
     else:
         print("Stock Thicker not defined please use -h to display help!")
         exit(1)
+
     if yahoo_dict != None:
         logging.info(yahoo_dict)
         #print(yahoo_dict)
@@ -48,7 +56,10 @@ def main():
         print("Company name  : "+yahoo_dict["shortName"])
         print("---------------------------------------")
         print("\tMarketCap                 : "+yahoo_dict["mcap"])
-        print("\tFloat                     : "+yahoo_dict["float"])
+        if (yahoo_dict["float"] != "N/A"):
+            print("\tFloat                     : "+yahoo_dict["float"])
+        else:
+            print("\tFloat                     : "+finviz.get_dataframe_row("Shs Float"))
         print("\tAverage Volume            : "+yahoo_dict["avg_volume"])
         print("\tInsider Ownership         : "+yahoo_dict["insider_own"])
         print("\tInstitutional Ownership   : "+yahoo_dict["institution_own"])
@@ -57,10 +68,17 @@ def main():
         print("\tPost-market price : "+str(yahoo_dict["pm_price"]))
         print("\tPrev close price  : "+str(yahoo_dict["prev_close_price"]))
         print("\tPre-market price  : "+str(yahoo_dict["prem_price"]))
+        yahoo.calculate_gap()
         if(yahoo_dict["gap"] != "N/A"):
             print("\tGAP               : "+str(yahoo_dict["gap"])+"%")
         else:
-            print("\tGAP               : "+str(yahoo_dict["gap"]))
+            print("\tGAP               : "+str(finviz.get_dataframe_row("Change")))
+
+
+    
+    #print(finviz.get_dataframe_row("Shs Float"))
+    print(finviz.get_news())
+
 if __name__ == "__main__":
     main()
     logging.info("CLI activated")

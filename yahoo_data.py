@@ -28,6 +28,12 @@ class Yahoo_data_class:
             return number
         return 0
 
+    def calculate_gap(self):
+        if self.close_price>0 and self.prem_price>0 :
+            self.data_list['gap']=str(round(float(((self.prem_price/self.close_price)-1)*100), 2))
+        else:
+            self.data_list['gap']="N/A"
+
     def get_fundamental_data(self, thicker):
         self.thicker = thicker
         url = 'https://finance.yahoo.com/quote/'+thicker+'/key-statistics'
@@ -35,7 +41,6 @@ class Yahoo_data_class:
             html_text = requests.get(url).text
             self.data = json.loads(re.search(r'root\.App\.main = (.*?\});\n', html_text).group(1))
             self.data_list = {}
-
             self.data_list['shortName']=self.get_tree_data(['QuoteSummaryStore','quoteType', 'shortName'])
             self.data_list['mcap']=self.get_tree_data(['QuoteSummaryStore','price', 'marketCap','fmt'])
             self.data_list['float']=self.get_tree_data(['QuoteSummaryStore','defaultKeyStatistics', 'floatShares','fmt'])
@@ -47,12 +52,9 @@ class Yahoo_data_class:
             self.data_list['prem_price']=self.get_tree_data(['QuoteSummaryStore','price', 'preMarketPrice','fmt'])
             self.data_list['prev_close_price']=self.get_tree_data(['QuoteSummaryStore','financialData', 'currentPrice','fmt'])
 
-            close_price=self.check_if_int(float(self.data_list['prev_close_price']))
-            prem_price=self.check_if_int(float(self.data_list['prem_price']))
-            if close_price>0 and prem_price>0 :
-                self.data_list['gap']=str(round(float(((prem_price/close_price)-1)*100), 2))
-            else:
-                self.data_list['gap']="N/A"
+            self.close_price=self.check_if_int(float(self.data_list['prev_close_price']))
+            self.prem_price=self.check_if_int(float(self.data_list['prem_price']))
+            
 
         except KeyError:
             print(f"Thicker symbol '{thicker}' not found.")

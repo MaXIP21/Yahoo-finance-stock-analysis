@@ -1,3 +1,3 @@
 INFO:root:Initializing ScraperClass
-INFO:root:{'shortName': 'Wah Fu Education Group Limited', 'mcap': '54.76M', 'float': 'N/A', 'avg_volume': '1.99M', 'insider_own': '73.04%', 'institution_own': '0.86%', 'short_ratio': '0.09', 'pm_price': '13.22', 'prem_price': 0, 'prev_close_price': '12.50', 'gap': 'N/A'}
+INFO:root:{'shortName': 'Wah Fu Education Group Limited', 'mcap': '54.76M', 'float': 'N/A', 'avg_volume': '1.99M', 'insider_own': '73.04%', 'institution_own': '0.86%', 'short_ratio': '0.09', 'pm_price': '13.22', 'prem_price': 0, 'prev_close_price': '12.50'}
 INFO:root:CLI activated
