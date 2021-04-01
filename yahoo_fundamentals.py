@@ -20,6 +20,9 @@ def get_args():
     
     parser.add_argument('-s','--stock', metavar='stock', type=str, 
                         help='Thicker of the stock.')
+
+    parser.add_argument('-n','--news', dest='news', action='store_true', 
+                        help='Fetch news.')
     
     parser.add_argument('--LOG', type=str, metavar='LOG_LEVEL', dest='LOG',
                         choices=['DEBUG', 'WARNING', 'ERROR', 'CRITICAL', 'INFO'],
@@ -52,8 +55,13 @@ def main():
     if yahoo_dict != None:
         logging.info(yahoo_dict)
         #print(yahoo_dict)
-        print("Stock : "+yahoo.thicker)
+        print("Stock : "+yahoo.thicker.upper())
         print("Company name  : "+yahoo_dict["shortName"])
+        print("Labels : ")
+        if (yahoo_dict["mcap_raw"] != "N/A" and float(yahoo_dict["mcap_raw"]) < 380000000):
+            print("\t[ Small Cap ] ")
+        if (yahoo_dict["float_raw"] != "N/A" and float(yahoo_dict["float_raw"]) < 10000000):
+            print("\t[ Low Float ] ")
         print("---------------------------------------")
         print("\tMarketCap                 : "+yahoo_dict["mcap"])
         if (yahoo_dict["float"] != "N/A"):
@@ -73,11 +81,21 @@ def main():
             print("\tGAP               : "+str(yahoo_dict["gap"])+"%")
         else:
             print("\tGAP               : "+str(finviz.get_dataframe_row("Change")))
+    if args.news is not None:
+        finviz.get_news()
+        print("\nHeadlines : \n")
+        for ad in range(1,4):
+            print("  "+finviz.news.values[ad][0])
+            print("\t\t"+finviz.news.values[ad][1])
+            print("\t\t"+finviz.news.values[ad][2])
 
-
+        #for news_index in range(0,3):
+        #    date=finviz.news.index[news_index]
+            
+        #    print(finviz.news['News Headline'][0])
     
     #print(finviz.get_dataframe_row("Shs Float"))
-    print(finviz.get_news())
+    #print(finviz.get_news())
 
 if __name__ == "__main__":
     main()

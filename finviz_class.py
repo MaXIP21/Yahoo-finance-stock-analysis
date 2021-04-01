@@ -50,16 +50,15 @@ class Finviz_data_class:
     def get_news(self):
         try:
             # Find news table
-            news = pd.read_html(str(self.html), attrs = {'class': 'fullview-news-outer'})[0]
+            self.news = pd.read_html(str(self.html), attrs = {'class': 'fullview-news-outer'})[0]
             links = []
             for a in self.html.find_all('a', class_="tab-link-news"):
                 links.append(a['href'])
             
             # Clean up news dataframe
-            news.columns = ['Date', 'News Headline']
-            news['Article Link'] = links
-            news = news.set_index('Date')
-            return news
+            self.news.columns = ['Date', 'News Headline']
+            self.news['Article Link'] = links
+            #self.news = self.news.set_index('Date')
 
         except Exception as e:
             return e

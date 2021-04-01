@@ -43,7 +43,9 @@ class Yahoo_data_class:
             self.data_list = {}
             self.data_list['shortName']=self.get_tree_data(['QuoteSummaryStore','quoteType', 'shortName'])
             self.data_list['mcap']=self.get_tree_data(['QuoteSummaryStore','price', 'marketCap','fmt'])
+            self.data_list['mcap_raw']=self.get_tree_data(['QuoteSummaryStore','price', 'marketCap','raw'])
             self.data_list['float']=self.get_tree_data(['QuoteSummaryStore','defaultKeyStatistics', 'floatShares','fmt'])
+            self.data_list['float_raw']=self.get_tree_data(['QuoteSummaryStore','defaultKeyStatistics', 'floatShares','raw'])
             self.data_list['avg_volume']=self.get_tree_data(['QuoteSummaryStore','price', 'averageDailyVolume3Month','fmt'])
             self.data_list['insider_own']=self.get_tree_data(['QuoteSummaryStore','defaultKeyStatistics', 'heldPercentInsiders','fmt'])
             self.data_list['institution_own']=self.get_tree_data(['QuoteSummaryStore','defaultKeyStatistics', 'heldPercentInstitutions','fmt'])
