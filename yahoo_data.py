@@ -59,6 +59,6 @@ class Yahoo_data_class:
             
 
         except KeyError:
-            print(f"Thicker symbol "+thicker+" not found.")
+            print("Thicker symbol "+thicker+" not found.")
             pass
     
