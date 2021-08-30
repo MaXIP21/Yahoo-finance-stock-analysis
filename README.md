@@ -17,3 +17,5 @@ optional arguments:
   --LOG LOG_LEVEL       Set the log level using environment variable LOG.
                         (default: INFO)
 ```
+## Installation
+pip install requests pandas jso
