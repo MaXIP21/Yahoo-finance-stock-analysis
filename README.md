@@ -18,4 +18,4 @@ optional arguments:
                         (default: INFO)
 ```
 ## Installation
-pip install requests pandas jso
+pip install requests pandas json
